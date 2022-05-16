@@ -14,10 +14,9 @@ public class Game : MonoBehaviour
             throw new ArgumentNullException();
     }
 
-    private void Awake()
+    private void Awake() 
     {
         Play();
-
     }
 
     public void Play()
@@ -26,7 +25,6 @@ public class Game : MonoBehaviour
         FinishZone.UpdatePosition();
 
         Circle.Init(StartZone.transform, FinishZone.transform);
-
 
         Circle.Play();
         Player.Play();

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(CircleMovement))]
+[RequireComponent(typeof(CircleSpeed))]
+[RequireComponent(typeof(CircleNavigator))]
 public class Circle : EntityBehaviour
 {
     private CircleMovement _circleMovement;
@@ -15,9 +18,9 @@ public class Circle : EntityBehaviour
 
     public void Init(Transform startZone, Transform finishZone)
     {
-        transform.position = startZone.position;
-
+        _circleSpeed.Init();
         _circleNavigator.Init(finishZone);
+        _circleMovement.Init(_circleSpeed, _circleNavigator, startZone);
     }
 
     public override void Play()

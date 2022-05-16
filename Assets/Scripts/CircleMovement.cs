@@ -9,10 +9,11 @@ public class CircleMovement : MonoBehaviour
 
     private const float SLOW = 0.01f;
 
-    private void Awake()
+    public void Init(CircleSpeed circleSpeed, CircleNavigator circleNavigator, Transform startZone)
     {
-        _circleSpeed = GetComponent<CircleSpeed>();
-        _circleNavigator = GetComponent<CircleNavigator>();
+        transform.position = startZone.position;
+        _circleSpeed = circleSpeed;
+        _circleNavigator = circleNavigator;        
     }
 
     public void StartMovement() => _isMoving = true;

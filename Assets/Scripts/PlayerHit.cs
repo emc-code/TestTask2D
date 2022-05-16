@@ -3,15 +3,15 @@ using UnityEngine.UI;
 
 public class PlayerHit : MonoBehaviour
 {
-    [SerializeField] Slider Slider;
+    [SerializeField] private Slider Slider;
     public float Radius => _radius;
 
     private float _radius;
 
     private void Awake()
     {
+        SetRadius(Slider.value);
         Slider.onValueChanged.AddListener(SetRadius);
-
     }
 
     private void SetRadius(float value)

@@ -15,14 +15,13 @@ public class CircleSpeed : EntityBehaviour
 
     private void Reset() => _value = Mathf.Clamp(_value, _value, TargetSpeed);
 
-    private void Awake()
+    public void Init()
     {
         _value = StartSpeed;
         Slider.onValueChanged.AddListener(SetAcceleration);
         SetAcceleration(Slider.value);
     }
 
-   
     public void SetEscapeMode(bool escapeMode)
     {
         if (escapeMode == false)

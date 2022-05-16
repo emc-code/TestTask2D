@@ -8,7 +8,7 @@ public class CircleHit : MonoBehaviour
     private CircleNavigator _circleNavigator;
     private CircleCollider2D _circleCollider;
 
-    private float _radius;
+    private float _radius = 0.5f;
     private bool _hasContactPlayer;
 
     private bool CheckContact => Vector3.Distance(_barrier.transform.position, transform.position) <= _radius + _barrier.Radius;
@@ -29,7 +29,6 @@ public class CircleHit : MonoBehaviour
         _hasContactPlayer = CheckContact;
 
         _circleCollider.radius = _radius;
-
     }
 
     private void FixedUpdate()
