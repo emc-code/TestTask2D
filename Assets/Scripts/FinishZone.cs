@@ -16,6 +16,6 @@ public class FinishZone : MonoBehaviour
     public void UpdatePosition()
     {
         Vector2 max = Camera.ViewportToWorldPoint(new Vector2(1, 1));
-        transform.position = max - Vector2.one * 0.5f;
+        transform.position = max - Vector2.one * 0.7f;
     }
 }

@@ -9,6 +9,7 @@ public class CircleMovement : MonoBehaviour
 
     private const float SLOW = 0.01f;
 
+
     public void Init(CircleSpeed circleSpeed, CircleNavigator circleNavigator, Transform startZone)
     {
         transform.position = startZone.position;
@@ -28,6 +29,6 @@ public class CircleMovement : MonoBehaviour
     private void Move()
     {
         Vector3 direction = _circleNavigator.GetDirection();
-        transform.position += direction * _circleSpeed.Value * SLOW;
+        transform.position += direction * _circleSpeed.GetValue() * SLOW;
     }
 }

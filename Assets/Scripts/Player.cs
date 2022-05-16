@@ -1,19 +1,39 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(PlayerCollider))]
 public class Player : EntityBehaviour
-{
-    [SerializeField] private Camera _camera;
+{   
+    [SerializeField] private GameObject Sprite;
 
-    private void OnValidate()
+    private Camera _camera;
+
+    private PlayerCollider _playerCollider;
+
+    protected override void Awake()
     {
-        if (_camera == null)
-            throw new System.ArgumentNullException(nameof(_camera));
+        base.Awake();
+    }
+
+    public void Init(Camera camera)
+    {
+        _camera = camera;
+        _playerCollider = GetComponent<PlayerCollider>();
+        _playerCollider.Init();
     }
 
     protected override void EntityUpdate()
     {
         if (_isPlaying)
+        {
+            if (Sprite.activeSelf == false)
+                Sprite.SetActive(true);
+
             Move();
+        }
+        else
+        {
+            Sprite.SetActive(false);
+        }
     }
 
     private void Move()

@@ -16,6 +16,7 @@ public class StartZone : MonoBehaviour
     public void UpdatePosition()
     {
         Vector2 min = Camera.ViewportToWorldPoint(new Vector2(0, 0));
-        transform.position = min + Vector2.one * 0.5f;
+        transform.position = min + Vector2.one * 0.7f;
+        // transform.position = min - Vector2.up * 2.7f;
     }
 }

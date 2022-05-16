@@ -1,48 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CircleSpeed : EntityBehaviour
+public class CircleSpeed : MonoBehaviour
 {
-    public float Value => _value;
-
-    [SerializeField] private float StartSpeed;
-    [SerializeField] private float TargetSpeed;
+    [SerializeField] private float StartValue;
+    [SerializeField] private float MaxValue;
     [SerializeField] private Slider Slider;
 
-    private bool _escapeMode = false;
     private float _value;
     private float _acceleration;
+    private bool _escapeMode;
 
-    private void Reset() => _value = Mathf.Clamp(_value, _value, TargetSpeed);
+    private void Reset() => _value = Mathf.Clamp(_value, _value, MaxValue);
 
     public void Init()
     {
-        _value = StartSpeed;
+        _escapeMode = false;
+        _value = StartValue;
+
         Slider.onValueChanged.AddListener(SetAcceleration);
         SetAcceleration(Slider.value);
     }
 
-    public void SetEscapeMode(bool escapeMode)
+    public void SetEscapeMode(bool value)
     {
-        if (escapeMode == false)
+        if (value == false)
             Reset();
 
-        _escapeMode = escapeMode;
+        _escapeMode = value;
     }
 
-    protected override void EntityUpdate()
+    public float GetValue()
     {
-        if ((_value < TargetSpeed) || (_escapeMode == true))
+        if ((_value < MaxValue) || (_escapeMode == true))
             SpeedUp();
-    }
 
-    public void SpeedUp()
+        return _value;
+    }
+    
+    private void SpeedUp()
     {
         _value += _acceleration * Time.deltaTime;
 
         if (_escapeMode == false)
-            if (TargetSpeed < _value)
-                _value = Mathf.Clamp(_value, _value, TargetSpeed);
+            if (MaxValue < _value)
+                _value = MaxValue;
     }
 
     private void SetAcceleration(float value)

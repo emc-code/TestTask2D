@@ -1,52 +1,58 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
-public class CircleNavigator : MonoBehaviour
+public class CircleNavigator : MonoBehaviour, ICircleNavigator
 {
-    public PlayerHit hit;
-    public Camera Camera;
+    private IMovePolicy _toTargetMovePolicy;
+    private List<IMovePolicy> _movePolicies = new List<IMovePolicy>();
 
-    public bool _isEscape = false;
-    public bool _hasBorderCollision = false;
-
-    private Transform _target;
-    private Vector2 _borderDirection;
-    
+    public void AddMovePolicy(IMovePolicy movePolicy) => _movePolicies.Add(movePolicy);
 
     public void Init(Transform target)
     {
-        _target = target;
+        _toTargetMovePolicy = new ToTargetMovePolicy(transform, target);
     }
 
     public Vector3 GetDirection()
     {
+        Vector2 result = GetDirection(_movePolicies);
+        _movePolicies.Clear();
+        return result.normalized;
+    }
+
+    private Vector2 GetDirection(List<IMovePolicy> movePolicies)
+    {
+        if (movePolicies.Count == 0)
+            return _toTargetMovePolicy.GetDirection();
+
+        if (movePolicies.Exists(x => x is BorderMovePolicy))
+            return GetPushBordersDirection(movePolicies);
+
+        return GetDirectionsSumm(movePolicies);
+    }
+
+    private Vector2 GetDirectionsSumm(List<IMovePolicy> movePolicies)
+    {
+        Debug.Log(movePolicies.Count + " summ  ");
 
 
-        if (_hasBorderCollision == true)
+        Vector2 result = Vector2.zero;
+        foreach (var item in movePolicies)
         {
-            Vector2 dir = _borderDirection.normalized;
-
-            _hasBorderCollision = false;
-            _borderDirection = Vector2.zero;
-
-            return Vector2.zero;
+            result += item.GetDirection();
         }
 
-        if (_isEscape == true)
-            return GetEscapeDirection().normalized;
-
-
-        return (_target.position - transform.position).normalized;
+        return result;
     }
-
-    public Vector3 GetEscapeDirection()
+    private Vector2 GetPushBordersDirection(List<IMovePolicy> movePolicies)
     {
-        Vector3 escapeDirection = transform.position - hit.transform.position;
-        return escapeDirection;
-    }
+        Debug.Log(movePolicies.Count);
 
-    public void AddBorderDirection(Vector2 vector2)
-    {
-        _borderDirection += vector2;
-        _hasBorderCollision = true;
+        Vector2 result = Vector2.zero;
+        foreach (var item in _movePolicies)
+            if (item is BorderMovePolicy)
+                result += item.GetDirection();
+
+        return result;
     }
 }

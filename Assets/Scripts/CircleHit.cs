@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
+
 [RequireComponent(typeof(CircleCollider2D))]
 public class CircleHit : MonoBehaviour
 {
-    [SerializeField] private PlayerHit _barrier;
+    [SerializeField] private PlayerCollider _barrier;
     private CircleSpeed _circleSpeed;
     private CircleNavigator _circleNavigator;
     private CircleCollider2D _circleCollider;
@@ -13,18 +14,12 @@ public class CircleHit : MonoBehaviour
 
     private bool CheckContact => Vector3.Distance(_barrier.transform.position, transform.position) <= _radius + _barrier.Radius;
 
-    public void BorderCollider(Vector2 dir)
-    {
-        _circleNavigator.AddBorderDirection(dir);
-    }
-
     private void Awake()
     {
         _circleSpeed = GetComponent<CircleSpeed>();
         _circleNavigator = GetComponent<CircleNavigator>();
         _circleCollider = GetComponent<CircleCollider2D>();
 
-        _circleNavigator.hit = _barrier;
 
         _hasContactPlayer = CheckContact;
 
@@ -48,12 +43,10 @@ public class CircleHit : MonoBehaviour
     private void PlayerCollisionEnter()
     {
         _circleSpeed.SetEscapeMode(true);
-        _circleNavigator._isEscape = true;
     }
 
     private void PlayerCollisionExit()
     {
-        _circleNavigator._isEscape = false;
         _circleSpeed.SetEscapeMode(false);
     }
 }

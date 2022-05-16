@@ -3,20 +3,21 @@ using System;
 
 public class Game : MonoBehaviour
 {
+    [SerializeField] private Camera Camera;
     [SerializeField] private Circle Circle;
     [SerializeField] private Player Player;
     [SerializeField] private FinishZone FinishZone;
     [SerializeField] private StartZone StartZone;
-    
+
     private void OnValidate()
     {
         if ((Circle == null) || (Player == null) || (FinishZone == null) || (StartZone == null))
             throw new ArgumentNullException();
     }
 
-    private void Awake() 
+    private void Awake()
     {
-        Play();
+        // Play();
     }
 
     public void Play()
@@ -25,6 +26,7 @@ public class Game : MonoBehaviour
         FinishZone.UpdatePosition();
 
         Circle.Init(StartZone.transform, FinishZone.transform);
+        Player.Init(Camera);
 
         Circle.Play();
         Player.Play();

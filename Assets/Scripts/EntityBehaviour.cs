@@ -4,15 +4,19 @@ using UnityEngine;
 
 public abstract class EntityBehaviour : MonoBehaviour
 {
-    protected bool _isPlaying = false;
+    protected bool _isPlaying;
     public virtual void Play() => _isPlaying = true;
     public virtual void Pause() => _isPlaying = false;
 
     protected abstract void EntityUpdate();
 
-    private void FixedUpdate()
+    protected virtual void Awake()
+    {
+        _isPlaying = false;
+    }
+
+    private void Update()
     {
         EntityUpdate();
     }
-
 }

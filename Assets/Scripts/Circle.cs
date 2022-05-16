@@ -9,8 +9,10 @@ public class Circle : EntityBehaviour
     private CircleSpeed _circleSpeed;
     private CircleNavigator _circleNavigator;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _circleMovement = GetComponent<CircleMovement>();
         _circleSpeed = GetComponent<CircleSpeed>();
         _circleNavigator = GetComponent<CircleNavigator>();
