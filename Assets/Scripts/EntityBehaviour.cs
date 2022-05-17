@@ -15,7 +15,7 @@ public abstract class EntityBehaviour : MonoBehaviour
         _isPlaying = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         EntityUpdate();
     }

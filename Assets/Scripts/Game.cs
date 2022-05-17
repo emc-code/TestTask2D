@@ -17,7 +17,7 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
-        // Play();
+        Play();
     }
 
     public void Play()

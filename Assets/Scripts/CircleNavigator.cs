@@ -6,6 +6,8 @@ public class CircleNavigator : MonoBehaviour, ICircleNavigator
     private IMovePolicy _toTargetMovePolicy;
     private List<IMovePolicy> _movePolicies = new List<IMovePolicy>();
 
+    private bool _stopMovement = false;
+
     public void AddMovePolicy(IMovePolicy movePolicy) => _movePolicies.Add(movePolicy);
 
     public void Init(Transform target)
@@ -15,6 +17,9 @@ public class CircleNavigator : MonoBehaviour, ICircleNavigator
 
     public Vector3 GetDirection()
     {
+        if (_stopMovement)
+            return Vector2.zero;
+
         Vector2 result = GetDirection(_movePolicies);
         _movePolicies.Clear();
         return result.normalized;
@@ -22,8 +27,17 @@ public class CircleNavigator : MonoBehaviour, ICircleNavigator
 
     private Vector2 GetDirection(List<IMovePolicy> movePolicies)
     {
+        if (_stopMovement == true)
+            return Vector2.zero;
+
         if (movePolicies.Count == 0)
             return _toTargetMovePolicy.GetDirection();
+
+        if (movePolicies.Exists(x => x is FinishMovePolicy))
+        {
+            _stopMovement = true;
+            return Vector2.zero;
+        }
 
         if (movePolicies.Exists(x => x is BorderMovePolicy))
             return GetPushBordersDirection(movePolicies);
@@ -33,21 +47,14 @@ public class CircleNavigator : MonoBehaviour, ICircleNavigator
 
     private Vector2 GetDirectionsSumm(List<IMovePolicy> movePolicies)
     {
-        Debug.Log(movePolicies.Count + " summ  ");
-
-
         Vector2 result = Vector2.zero;
         foreach (var item in movePolicies)
-        {
             result += item.GetDirection();
-        }
 
         return result;
     }
     private Vector2 GetPushBordersDirection(List<IMovePolicy> movePolicies)
     {
-        Debug.Log(movePolicies.Count);
-
         Vector2 result = Vector2.zero;
         foreach (var item in _movePolicies)
             if (item is BorderMovePolicy)

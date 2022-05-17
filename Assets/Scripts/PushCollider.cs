@@ -23,6 +23,14 @@ public class ToTargetMovePolicy : IMovePolicy
     }
 }
 
+public class FinishMovePolicy : IMovePolicy
+{
+    public Vector2 GetDirection()
+    {        
+        return Vector2.zero;
+    }
+}
+
 public class PlayerMovePolicy : IMovePolicy
 {
     private Transform _player;
@@ -52,6 +60,7 @@ public class BorderMovePolicy : IMovePolicy
     {
         ContactPoint2D[] contacts = new ContactPoint2D[2];
         _collision2D.GetContacts(contacts);
+
         Vector2 direction = _collision2D.contacts[0].normal;
         return -direction;
     }

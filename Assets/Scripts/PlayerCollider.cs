@@ -7,7 +7,7 @@ public class PlayerCollider : MonoBehaviour
     [SerializeField] private Slider Slider;
     [SerializeField] private Transform Sprite;
 
-    CircleCollider2D _circleCollider;
+    private CircleCollider2D _circleCollider;
     private float _radius;
 
     public float Radius => _radius;
@@ -30,27 +30,29 @@ public class PlayerCollider : MonoBehaviour
         _circleCollider.radius = _radius;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
-            OnCircleCollision(collision, circleNavigator);
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
-            OnCircleCollision(collision, circleNavigator);
+            OnCircleCollision(collision.transform, circleNavigator);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
+            OnCircleCollision(collision.transform, circleNavigator);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.transform.TryGetComponent(out CircleSpeed circleSpeed))
             circleSpeed.SetEscapeMode(false);
     }
 
-    private void OnCircleCollision(Collision2D collision, ICircleNavigator circleNavigator)
+    private void OnCircleCollision(Transform circle, ICircleNavigator circleNavigator)
     {
-        PlayerMovePolicy playerMovePolicy = new PlayerMovePolicy(transform, collision.transform);
+        PlayerMovePolicy playerMovePolicy = new PlayerMovePolicy(transform, circle);
         circleNavigator.AddMovePolicy(playerMovePolicy);
-        collision.gameObject.GetComponent<CircleSpeed>().SetEscapeMode(true);
+        circle.gameObject.GetComponent<CircleSpeed>().SetEscapeMode(true);
     }
 }

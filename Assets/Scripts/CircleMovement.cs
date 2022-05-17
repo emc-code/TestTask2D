@@ -9,7 +9,6 @@ public class CircleMovement : MonoBehaviour
 
     private const float SLOW = 0.01f;
 
-
     public void Init(CircleSpeed circleSpeed, CircleNavigator circleNavigator, Transform startZone)
     {
         transform.position = startZone.position;
