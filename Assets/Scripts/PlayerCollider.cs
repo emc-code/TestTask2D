@@ -32,15 +32,12 @@ public class PlayerCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
-            OnCircleCollision(collision.transform, circleNavigator);
+        OnPlayerEnter(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
-            OnCircleCollision(collision.transform, circleNavigator);
+        OnPlayerEnter(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -49,10 +46,13 @@ public class PlayerCollider : MonoBehaviour
             circleSpeed.SetEscapeMode(false);
     }
 
-    private void OnCircleCollision(Transform circle, ICircleNavigator circleNavigator)
+    private void OnPlayerEnter(Collider2D collision)
     {
-        PlayerMovePolicy playerMovePolicy = new PlayerMovePolicy(transform, circle);
-        circleNavigator.AddMovePolicy(playerMovePolicy);
-        circle.gameObject.GetComponent<CircleSpeed>().SetEscapeMode(true);
+        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
+        {         
+            EscapePolicy escapePolicy = new EscapePolicy(transform, collision.transform);
+            circleNavigator.AddMovePolicy(escapePolicy);
+            collision.gameObject.GetComponent<CircleSpeed>().SetEscapeMode(true);
+        }
     }
 }

@@ -4,19 +4,20 @@ public class BorderCollider : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
-            OnBorderEnter(collision, circleNavigator);
+        OnBorderEnter(collision);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
-            OnBorderEnter(collision, circleNavigator);
+        OnBorderEnter(collision);
     }
 
-    private void OnBorderEnter(Collision2D collision, ICircleNavigator circleNavigator)
+    private void OnBorderEnter(Collision2D collision)
     {
-        BorderMovePolicy borderMovePolicy = new BorderMovePolicy(collision);
-        circleNavigator.AddMovePolicy(borderMovePolicy);
+        if (collision.transform.TryGetComponent(out ICircleNavigator circleNavigator))
+        {
+            BorderPolicy borderPolicy = new BorderPolicy(collision);
+            circleNavigator.AddMovePolicy(borderPolicy);
+        }
     }
 }

@@ -5,12 +5,13 @@ public class CircleMovement : MonoBehaviour
     private CircleSpeed _circleSpeed;
     private CircleNavigator _circleNavigator;
 
-    private bool _isMoving = false;
+    private bool _isMoving;
 
     private const float SLOW = 0.01f;
 
     public void Init(CircleSpeed circleSpeed, CircleNavigator circleNavigator, Transform startZone)
     {
+        _isMoving = false;
         transform.position = startZone.position;
         _circleSpeed = circleSpeed;
         _circleNavigator = circleNavigator;        

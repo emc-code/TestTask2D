@@ -22,8 +22,8 @@ public class FinishCollider : MonoBehaviour
     {
         if (Vector3.Distance(FinishPosition, circle.position) < 0.05f)
         {
-            FinishMovePolicy finishMovePolicy = new FinishMovePolicy();
-            circleNavigator.AddMovePolicy(finishMovePolicy);
+            FinishedPolicy finishedPolicy = new FinishedPolicy();
+            circleNavigator.AddMovePolicy(finishedPolicy);
             // Debug.Log(transform.position); ??                
         }
     }

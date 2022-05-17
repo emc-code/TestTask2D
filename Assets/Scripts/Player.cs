@@ -2,17 +2,13 @@
 
 [RequireComponent(typeof(PlayerCollider))]
 public class Player : EntityBehaviour
-{   
+{
     [SerializeField] private GameObject Sprite;
 
     private Camera _camera;
-
     private PlayerCollider _playerCollider;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+    protected override void Awake() => base.Awake();
 
     public void Init(Camera camera)
     {

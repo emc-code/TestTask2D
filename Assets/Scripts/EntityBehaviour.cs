@@ -10,13 +10,8 @@ public abstract class EntityBehaviour : MonoBehaviour
 
     protected abstract void EntityUpdate();
 
-    protected virtual void Awake()
-    {
-        _isPlaying = false;
-    }
+    protected virtual void Awake() => _isPlaying = false;
 
-    private void FixedUpdate()
-    {
-        EntityUpdate();
-    }
+    private void FixedUpdate() => EntityUpdate();
+
 }
