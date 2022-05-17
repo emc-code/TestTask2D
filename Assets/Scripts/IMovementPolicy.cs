@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface IMovePolicy
+public interface IMovementPolicy
 {
     Vector2 GetDirection();
 }

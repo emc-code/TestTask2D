@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class CircleNavigator : MonoBehaviour, ICircleNavigator
 {
-    private IMovePolicy _aimPolicy;
-    private List<IMovePolicy> _movePolicies = new List<IMovePolicy>();
+    private IMovementPolicy _aimPolicy;
+    private List<IMovementPolicy> _movementPolicies = new List<IMovementPolicy>();
 
-    public void AddMovePolicy(IMovePolicy movePolicy) => _movePolicies.Add(movePolicy);
+    public void AddMovePolicy(IMovementPolicy movePolicy) => _movementPolicies.Add(movePolicy);
 
     public void Init(Transform target)
     {
@@ -15,37 +15,37 @@ public class CircleNavigator : MonoBehaviour, ICircleNavigator
 
     public Vector3 GetDirection()
     {
-        Vector2 result = GetDirection(_movePolicies);
-        _movePolicies.Clear();
+        Vector2 result = GetDirection(_movementPolicies);
+        _movementPolicies.Clear();
         return result.normalized;
     }
 
-    private Vector2 GetDirection(List<IMovePolicy> movePolicies)
+    private Vector2 GetDirection(List<IMovementPolicy> movementPolicies)
     {
-        if (movePolicies.Count == 0)
+        if (movementPolicies.Count == 0)
             return _aimPolicy.GetDirection();
 
-        if (movePolicies.Exists(x => x is FinishedPolicy))
+        if (movementPolicies.Exists(x => x is FinishedPolicy))
             return Vector2.zero;
 
-        if (movePolicies.Exists(x => x is BorderPolicy))
-            return GetBordersDirection(movePolicies);
+        if (movementPolicies.Exists(x => x is BorderPolicy))
+            return GetBordersDirection(movementPolicies);
 
-        return GetDirectionsSumm(movePolicies);
+        return GetDirectionsSumm(movementPolicies);
     }
 
-    private Vector2 GetDirectionsSumm(List<IMovePolicy> movePolicies)
+    private Vector2 GetDirectionsSumm(List<IMovementPolicy> movementPolicies)
     {
         Vector2 result = Vector2.zero;
-        foreach (var item in movePolicies)
+        foreach (var item in movementPolicies)
             result += item.GetDirection();
 
         return result;
     }
-    private Vector2 GetBordersDirection(List<IMovePolicy> movePolicies)
+    private Vector2 GetBordersDirection(List<IMovementPolicy> movementPolicies)
     {
         Vector2 result = Vector2.zero;
-        foreach (var item in _movePolicies)
+        foreach (var item in movementPolicies)
             if (item is BorderPolicy)
                 result += item.GetDirection();
 

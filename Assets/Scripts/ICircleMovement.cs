@@ -1,4 +1,4 @@
 ﻿public interface ICircleNavigator
 {
-    void AddMovePolicy(IMovePolicy movePolicy);
+    void AddMovePolicy(IMovementPolicy movePolicy);
 }

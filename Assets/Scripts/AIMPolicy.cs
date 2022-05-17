@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class AIMPolicy : IMovePolicy
+public class AIMPolicy : IMovementPolicy
 {
     private Transform _circle;
     private Transform _target;

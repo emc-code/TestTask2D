@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class FinishedPolicy : IMovePolicy
+public class FinishedPolicy : IMovementPolicy
 {
     public Vector2 GetDirection()
     {

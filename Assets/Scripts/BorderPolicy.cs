@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BorderPolicy : IMovePolicy
+public class BorderPolicy : IMovementPolicy
 {
     private Collision2D _collision2D;
     public BorderPolicy(Collision2D collision2D) => _collision2D = collision2D;

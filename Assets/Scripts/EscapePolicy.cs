@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EscapePolicy : IMovePolicy
+public class EscapePolicy : IMovementPolicy
 {
     private Transform _player;
     private Transform _circle;
