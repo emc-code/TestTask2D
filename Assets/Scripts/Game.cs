@@ -15,11 +15,6 @@ public class Game : MonoBehaviour
             throw new ArgumentNullException();
     }
 
-    private void Awake()
-    {
-        Play();
-    }
-
     public void Play()
     {
         StartZone.UpdatePosition();
