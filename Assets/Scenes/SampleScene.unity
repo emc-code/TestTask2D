@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartValue: 1
-  MaxValue: 10
+  MaxValue: 5
   Slider: {fileID: 762696581}
 --- !u!114 &437161690
 MonoBehaviour:
@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efe9d115936d604a8f6faafae15faa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finishPosition: {x: 0, y: 0, z: 0}
+  FinishPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &762696579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2541,7 +2541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892571464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.89, y: -8.03, z: 0}
+  m_LocalPosition: {x: -3.89, y: -2.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2135812071}
